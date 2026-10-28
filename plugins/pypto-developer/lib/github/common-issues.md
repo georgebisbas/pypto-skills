@@ -65,9 +65,13 @@ and aggregate pages separately:
 
 ```text
 gh api --hostname "$GITHUB_HOST" --method GET "repos/$PR_REPO/pulls" \
-  -f state=closed -f "head=$PR_HEAD_PREFIX$BRANCH_NAME" \
+  -f state=closed -f "head=$HEAD_OWNER:$BRANCH_NAME" \
   -f per_page=100 --paginate --slurp
 ```
+
+`HEAD_OWNER` is the fork owner carried by the head prefix, or the
+base-repository owner when the prefix is empty. GitHub ignores an unqualified
+`head` filter and returns every closed pull request.
 
 Filter `merged_at` only after aggregating the pages with `jq 'add'`; never
 combine `--slurp` with `--jq`. Treat any nonzero status as a lookup failure,
