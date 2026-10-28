@@ -161,7 +161,7 @@ class MergedPrHeadsTests(unittest.TestCase):
         self.assertEqual(0, outsider.returncode, outsider.stderr)
         self.assertEqual("", outsider.stdout)
         self.assertEqual(
-            ["head=topic", "head=topic"],
+            ["head=acme:topic", "head=acme:topic"],
             [call[9] for call in self.gh_calls()],
         )
 

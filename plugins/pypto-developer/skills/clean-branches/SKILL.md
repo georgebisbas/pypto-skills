@@ -68,11 +68,12 @@ fi
 
 The lookup helper queries closed pull requests through host-pinned REST
 (`gh api --hostname "$GITHUB_HOST" --method GET "repos/$PR_REPO/pulls"` with
-`state=closed`, `head=$PR_HEAD_PREFIX$BRANCH_NAME`, `per_page=100`, and
-`--paginate --slurp`), verifies `head.ref` and the head owner against
-`PR_HEAD_PREFIX` (or the base-repository owner when the prefix is empty), and
-prints one merged `head.sha` per line. The REST `head.sha` is the pull
-request's `headRefOid`.
+`state=closed`, `head=<head-owner>:$BRANCH_NAME`, `per_page=100`, and
+`--paginate --slurp`), where the head owner comes from `PR_HEAD_PREFIX` or from
+`PR_REPO` when the prefix is empty. GitHub ignores an unqualified `head`
+filter, so the selector is always owner-qualified. The helper verifies
+`head.ref` and the head owner and prints one merged `head.sha` per line. The
+REST `head.sha` is the pull request's `headRefOid`.
 
 Empty output with status 0 means no merged pull request exists for this branch.
 A nonzero status is a lookup failure: protect the branch, report it, and

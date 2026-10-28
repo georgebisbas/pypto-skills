@@ -53,7 +53,9 @@ else
   EXPECTED_OWNER=${PR_REPO%%/*}
 fi
 EXPECTED_OWNER_LOWER=$(printf '%s' "$EXPECTED_OWNER" | tr '[:upper:]' '[:lower:]')
-HEAD_SELECTOR="${PR_HEAD_PREFIX}${BRANCH_NAME}"
+# GitHub ignores head= without an owner and returns every closed pull request,
+# so always qualify the selector with the head owner.
+HEAD_SELECTOR="${EXPECTED_OWNER}:${BRANCH_NAME}"
 
 PR_PAGES=$(gh api --hostname "$GITHUB_HOST" --method GET \
   "repos/$PR_REPO/pulls" \
