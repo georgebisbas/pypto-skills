@@ -31,7 +31,7 @@ local task database, or SSH setup ship in the plugin.
 
 ### `pypto-user`
 
-User-facing workflows shared by PyPTO and pypto-lib:
+User-facing workflows shared by PyPTO, pypto-lib, and simpler:
 
 - `setup-and-run`
 - `generate-ir-trace`
